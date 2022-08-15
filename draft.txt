@@ -1,0 +1,28 @@
+// Expense Handler
+
+1) Select type of entry
+- Expense
+- Funds
+- Income
+
+2) Expense
+- Date of expense
+- Type of expense
+- Amount of expense
+- Mode of payment
+
+3) Funds
+- Date of adding Funds
+- Amount of funds
+- Mode of payment
+
+4) Income
+- Date of Income
+- Type of Income
+- Amount of Income
+
+5) Statistics
+- Expense/Funds/Income per month
+- Filter - mode of payment
+         - type of expense
+         - type of income
