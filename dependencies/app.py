@@ -1,6 +1,10 @@
 import threading
 from tkinter import *
-from configparser import ConfigParser
+from tkinter import ttk
+from dependencies.specifications import *
+from dependencies.date import *
+
+page_number = ""
 
 class App(threading.Thread):
 
@@ -15,24 +19,51 @@ class App(threading.Thread):
         # print("App is running...")
         self.specs = getSpecifications()
         self.bg_color = self.specs["Application"]["background_color"]
-        self.font_labels = self.specs["Application"]["font"] + self.specs["Font_size"]["labels"]
-        self.font_buttons = self.specs["Application"]["font"] + self.specs["Font_size"]["buttons"]
+        self.font_headers = self.specs["Application"]["font"] + " " + self.specs["Font_size"]["headers"]
+        self.font_labels = self.specs["Application"]["font"] + " " + self.specs["Font_size"]["labels"]
+        self.font_buttons = self.specs["Application"]["font"] + " " + self.specs["Font_size"]["buttons"]
         self.Window = Tk()
         self.Window.title("Expense Handler")
         self.Window.configure(bg = self.bg_color)
+        self.Window.resizable(False, False)
         self.Window.geometry(self.specs["Application"]["width"] + "x" + self.specs["Application"]["height"])
-        self.select_entry_label = Label(self.Window, text = "Select the type of entry", font = self.font_labels, background = self.bg_color)
-        self.select_entry_label.place(relx = 0.5, rely = 0.15, anchor = "center")
-        self.expense_button = Button(self.Window, text = "Expense", relief = RAISED, font = self.font_buttons, command = lambda:self.addExpensePage())
-        self.expense_button.place(relx = 0.2, rely = 0.4, relwidth = 0.2, anchor = "center")
-        self.funds_button = Button(self.Window, text = "Funds", relief = RAISED, font = self.font_buttons, command = lambda:self.addFundsPage())
-        self.funds_button.place(relx = 0.5, rely = 0.4, relwidth = 0.2, anchor = "center")
-        self.income_button = Button(self.Window, text = "Income", relief = RAISED, font = self.font_buttons, command = lambda:self.addIncomePage())
-        self.income_button.place(relx = 0.8, rely = 0.4, relwidth = 0.2, anchor = "center")
+        self.homePage()
         self.Window.mainloop()
 
+    def homePage(self):
+        print(self.font_headers)
+        self.select_entry_label = Label(self.Window, text = "Select the type of entry", font = self.font_headers, background = self.bg_color)
+        self.select_entry_label.place(relx = 0.5, rely = 0.15, anchor = "center")
+        self.expense_button = Button(self.Window, text = "Expense", relief = RAISED, font = self.font_buttons, command = lambda:self.destroyPage(self.specs["Pages"]["expense_page"]))
+        self.expense_button.place(relx = 0.2, rely = 0.4, relwidth = 0.2, anchor = "center")
+        self.funds_button = Button(self.Window, text = "Funds", relief = RAISED, font = self.font_buttons, command = lambda:self.destroyPage(self.specs["Pages"]["funds_page"]))
+        self.funds_button.place(relx = 0.5, rely = 0.4, relwidth = 0.2, anchor = "center")
+        self.income_button = Button(self.Window, text = "Income", relief = RAISED, font = self.font_buttons, command = lambda:self.destroyPage(self.specs["Pages"]["income_page"]))
+        self.income_button.place(relx = 0.8, rely = 0.4, relwidth = 0.2, anchor = "center")
+
     def addExpensePage(self):
-        print("This is the Expense Page.")
+        self.expense_header_label = Label(self.Window, text = "Expense", font = self.font_headers, background = self.bg_color)
+        self.expense_header_label.place(relx = 0.5, rely = 0.1, anchor = "center")
+        self.select_date_label = Label(self.Window,  text = "Select the date : ", font = self.font_labels, background = self.bg_color)
+        self.select_date_label.place(relx = 0.2, rely = 0.25, anchor = "center")
+        self.select_day_variable = StringVar()
+        self.select_day_dropdown = ttk.Combobox(self.Window, textvariable = self.select_day_variable, background = self.bg_color)
+        self.select_day_dropdown["values"] = getDayList()
+        self.select_day_dropdown.place(relx = 0.45, rely = 0.25, relwidth= 0.15, anchor = "center")
+        self.select_month_variable = StringVar()
+        self.select_month_dropdown = ttk.Combobox(self.Window, textvariable = self.select_month_variable, background = self.bg_color)
+        self.select_month_dropdown["values"] = getShortMonthList()
+        self.select_month_dropdown.place(relx = 0.65, rely = 0.25, relwidth= 0.15, anchor = "center")
+        self.select_year_variable = StringVar()
+        self.select_year_dropdown = ttk.Combobox(self.Window, textvariable = self.select_year_variable, background = self.bg_color)
+        self.select_year_dropdown["values"] = getYearList()
+        self.select_year_dropdown.place(relx = 0.85, rely = 0.25, relwidth= 0.15, anchor = "center")
+        self.expense_type_label = Label(self.Window,  text = "Type of expense : ", font = self.font_labels, background = self.bg_color)
+        self.expense_type_label.place(relx = 0.2, rely = 0.4, anchor = "center")
+        self.expense_type_variable = StringVar()
+        self.expense_type_dropdown = ttk.Combobox(self.Window, textvariable = self.expense_type_variable, background = self.bg_color)
+        self.expense_type_dropdown["values"] = ["Food", "Cab"]
+        self.expense_type_dropdown.place(relx = 0.45, rely = 0.4, relwidth= 0.2, anchor = "center")
 
     def addFundsPage(self):
         print("This is the Funds Page.")
@@ -40,8 +71,15 @@ class App(threading.Thread):
     def addIncomePage(self):
         print("This is the Income Page.")
 
-def getSpecifications():
-    file = "dependencies/specifications.ini"
-    specs = ConfigParser()
-    specs.read(file)
-    return specs
+    def destroyPage(self, next_page_number):
+        global page_number
+        for widget in self.Window.winfo_children():
+            widget.destroy()
+        if(next_page_number == self.specs["Pages"]["home_page"]):
+            self.homePage()
+        elif(next_page_number == self.specs["Pages"]["expense_page"]):
+            self.addExpensePage()
+        elif(next_page_number == self.specs["Pages"]["funds_page"]):
+            self.addFundsPage()
+        elif(next_page_number == self.specs["Pages"]["income_page"]):
+            self.addIncomePage()
