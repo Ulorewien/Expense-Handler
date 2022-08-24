@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from dependencies.specifications import *
 from dependencies.date import *
+from dependencies.data import *
 
 page_number = ""
 
@@ -64,12 +65,78 @@ class App(threading.Thread):
         self.expense_type_dropdown = ttk.Combobox(self.Window, textvariable = self.expense_type_variable, background = self.bg_color)
         self.expense_type_dropdown["values"] = ["Food", "Cab"]
         self.expense_type_dropdown.place(relx = 0.45, rely = 0.4, relwidth= 0.2, anchor = "center")
+        self.expense_amount_label = Label(self.Window, text = "Amount : ", font = self.font_labels, background = self.bg_color)
+        self.expense_amount_label.place(relx = 0.2, rely = 0.55, anchor = "center")
+        self.expense_amount_entry = Entry(self.Window, font = self.font_labels, background = self.bg_color)
+        self.expense_amount_entry.place(relx = 0.45, rely = 0.55, relwidth = 0.2, anchor = "center")
+        self.mode_of_payment_label = Label(self.Window, text = "Payment method : ", font = self.font_labels, background = self.bg_color)
+        self.mode_of_payment_label.place(relx = 0.2, rely = 0.7, anchor = "center")
+        self.mode_of_payment_variable = StringVar()
+        self.mode_of_payment_dropdown = ttk.Combobox(self.Window, textvariable = self.mode_of_payment_variable, background = self.bg_color)
+        self.mode_of_payment_dropdown["values"] = ["Gpay", "Cash"]
+        self.mode_of_payment_dropdown.place(relx = 0.45, rely = 0.7, relwidth = 0.2, anchor = "center")
+        self.add_expense_button = Button(self.Window, text = "Add Expense", relief = RAISED, font = self.font_buttons, command = lambda:addExpense())
+        self.add_expense_button.place(relx = 0.5, rely = 0.85, relwidth = 0.3, anchor = "center")
 
     def addFundsPage(self):
-        print("This is the Funds Page.")
+        self.funds_header_label = Label(self.Window, text = "Funds", font = self.font_headers, background = self.bg_color)
+        self.funds_header_label.place(relx = 0.5, rely = 0.1, anchor = "center")
+        self.select_date_label = Label(self.Window,  text = "Select the date : ", font = self.font_labels, background = self.bg_color)
+        self.select_date_label.place(relx = 0.2, rely = 0.25, anchor = "center")
+        self.select_day_variable = StringVar()
+        self.select_day_dropdown = ttk.Combobox(self.Window, textvariable = self.select_day_variable, background = self.bg_color)
+        self.select_day_dropdown["values"] = getDayList()
+        self.select_day_dropdown.place(relx = 0.45, rely = 0.25, relwidth = 0.15, anchor = "center")
+        self.select_month_variable = StringVar()
+        self.select_month_dropdown = ttk.Combobox(self.Window, textvariable = self.select_month_variable, background = self.bg_color)
+        self.select_month_dropdown["values"] = getShortMonthList()
+        self.select_month_dropdown.place(relx = 0.65, rely = 0.25, relwidth = 0.15, anchor = "center")
+        self.select_year_variable = StringVar()
+        self.select_year_dropdown = ttk.Combobox(self.Window, textvariable = self.select_year_variable, background = self.bg_color)
+        self.select_year_dropdown["values"] = getYearList()
+        self.select_year_dropdown.place(relx = 0.85, rely = 0.25, relwidth = 0.15, anchor = "center")
+        self.funds_amount_label = Label(self.Window, text = "Amount : ", font = self.font_labels, background = self.bg_color)
+        self.funds_amount_label.place(relx = 0.2, rely = 0.55, anchor = "center")
+        self.funds_amount_entry = Entry(self.Window, font = self.font_labels, background = self.bg_color)
+        self.funds_amount_entry.place(relx = 0.45, rely = 0.55, relwidth = 0.2, anchor = "center")
+        self.mode_of_payment_label = Label(self.Window, text = "Payment method : ", font = self.font_labels, background = self.bg_color)
+        self.mode_of_payment_label.place(relx = 0.2, rely = 0.7, anchor = "center")
+        self.mode_of_payment_variable = StringVar()
+        self.mode_of_payment_dropdown = ttk.Combobox(self.Window, textvariable = self.mode_of_payment_variable, background = self.bg_color)
+        self.mode_of_payment_dropdown["values"] = ["Gpay", "Cash"]
+        self.mode_of_payment_dropdown.place(relx = 0.45, rely = 0.7, relwidth = 0.2, anchor = "center")
+        self.add_funds_button = Button(self.Window, text = "Add Funds", relief = RAISED, font = self.font_buttons, command = lambda:addFunds())
+        self.add_funds_button.place(relx = 0.5, rely = 0.85, relwidth = 0.3, anchor = "center")
 
     def addIncomePage(self):
-        print("This is the Income Page.")
+        self.income_header_label = Label(self.Window, text = "Income", font = self.font_headers, background = self.bg_color)
+        self.income_header_label.place(relx = 0.5, rely = 0.1, anchor = "center")
+        self.select_date_label = Label(self.Window,  text = "Select the date : ", font = self.font_labels, background = self.bg_color)
+        self.select_date_label.place(relx = 0.2, rely = 0.25, anchor = "center")
+        self.select_day_variable = StringVar()
+        self.select_day_dropdown = ttk.Combobox(self.Window, textvariable = self.select_day_variable, background = self.bg_color)
+        self.select_day_dropdown["values"] = getDayList()
+        self.select_day_dropdown.place(relx = 0.45, rely = 0.25, relwidth = 0.15, anchor = "center")
+        self.select_month_variable = StringVar()
+        self.select_month_dropdown = ttk.Combobox(self.Window, textvariable = self.select_month_variable, background = self.bg_color)
+        self.select_month_dropdown["values"] = getShortMonthList()
+        self.select_month_dropdown.place(relx = 0.65, rely = 0.25, relwidth = 0.15, anchor = "center")
+        self.select_year_variable = StringVar()
+        self.select_year_dropdown = ttk.Combobox(self.Window, textvariable = self.select_year_variable, background = self.bg_color)
+        self.select_year_dropdown["values"] = getYearList()
+        self.select_year_dropdown.place(relx = 0.85, rely = 0.25, relwidth = 0.15, anchor = "center")
+        self.income_type_label = Label(self.Window,  text = "Type of income : ", font = self.font_labels, background = self.bg_color)
+        self.income_type_label.place(relx = 0.2, rely = 0.4, anchor = "center")
+        self.income_type_variable = StringVar()
+        self.income_type_dropdown = ttk.Combobox(self.Window, textvariable = self.income_type_variable, background = self.bg_color)
+        self.income_type_dropdown["values"] = ["Food", "Cab"]
+        self.income_type_dropdown.place(relx = 0.45, rely = 0.4, relwidth = 0.2, anchor = "center")
+        self.income_amount_label = Label(self.Window, text = "Amount : ", font = self.font_labels, background = self.bg_color)
+        self.income_amount_label.place(relx = 0.2, rely = 0.55, anchor = "center")
+        self.income_amount_entry = Entry(self.Window, font = self.font_labels, background = self.bg_color)
+        self.income_amount_entry.place(relx = 0.45, rely = 0.55, relwidth = 0.2, anchor = "center")
+        self.add_income_button = Button(self.Window, text = "Add Income", relief = RAISED, font = self.font_buttons, command = lambda:addIncome())
+        self.add_income_button.place(relx = 0.5, rely = 0.85, relwidth = 0.3, anchor = "center")
 
     def destroyPage(self, next_page_number):
         global page_number
