@@ -2,8 +2,7 @@ import threading
 from tkinter import *
 from tkinter import ttk
 from dependencies.specifications import *
-from dependencies.date import *
-from dependencies.data import *
+from dependencies.data_validation import *
 
 page_number = ""
 
@@ -24,6 +23,7 @@ class App(threading.Thread):
         self.font_labels = self.specs["Application"]["font"] + " " + self.specs["Font_size"]["labels"]
         self.font_buttons = self.specs["Application"]["font"] + " " + self.specs["Font_size"]["buttons"]
         self.font_inputs = self.specs["Application"]["font"] + " " + self.specs["Font_size"]["inputs"]
+        self.font_errors = self.specs["Application"]["font"] + " " + self.specs["Font_size"]["errors"]
         self.Window = Tk()
         self.Window.title("Expense Handler")
         self.Window.configure(bg = self.bg_color)
@@ -72,22 +72,34 @@ class App(threading.Thread):
         self.select_year_dropdown = ttk.Combobox(self.Window, textvariable = self.select_year_variable, background = self.bg_color)
         self.select_year_dropdown["values"] = getYearList()
         self.select_year_dropdown.place(relx = 0.85, rely = 0.25, relwidth= 0.15, anchor = "center")
+        self.date_validation_variable = StringVar()
+        self.date_validation_message = Label(self.Window, textvariable = self.date_validation_variable, font = self.font_errors, background = self.bg_color)
+        self.date_validation_message.place(relx = 0.65, rely = 0.3, anchor = "center")
         self.expense_type_label = Label(self.Window,  text = "Type of expense : ", font = self.font_labels, background = self.bg_color)
         self.expense_type_label.place(relx = 0.2, rely = 0.4, anchor = "center")
         self.expense_type_variable = StringVar()
         self.expense_type_dropdown = ttk.Combobox(self.Window, textvariable = self.expense_type_variable, background = self.bg_color)
-        self.expense_type_dropdown["values"] = ["Food", "Cab"]
+        self.expense_type_dropdown["values"] = getExpenseTypeList()
         self.expense_type_dropdown.place(relx = 0.45, rely = 0.4, relwidth= 0.2, anchor = "center")
+        self.type_validation_variable = StringVar()
+        self.type_validation_message = Label(self.Window, textvariable = self.type_validation_variable, font = self.font_errors, background = self.bg_color)
+        self.type_validation_message.place(relx = 0.65, rely = 0.4, anchor = "center")
         self.expense_amount_label = Label(self.Window, text = "Amount : ", font = self.font_labels, background = self.bg_color)
         self.expense_amount_label.place(relx = 0.2, rely = 0.55, anchor = "center")
         self.expense_amount_entry = Entry(self.Window, font = self.font_inputs, background = self.bg_color)
         self.expense_amount_entry.place(relx = 0.45, rely = 0.55, relwidth = 0.2, anchor = "center")
+        self.amount_validation_variable = StringVar()
+        self.amount_validation_message = Label(self.Window, textvariable = self.amount_validation_variable, font = self.font_errors, background = self.bg_color)
+        self.amount_validation_message.place(relx = 0.65, rely = 0.55, anchor = "center")
         self.mode_of_payment_label = Label(self.Window, text = "Payment method : ", font = self.font_labels, background = self.bg_color)
         self.mode_of_payment_label.place(relx = 0.2, rely = 0.7, anchor = "center")
         self.mode_of_payment_variable = StringVar()
         self.mode_of_payment_dropdown = ttk.Combobox(self.Window, textvariable = self.mode_of_payment_variable, background = self.bg_color)
-        self.mode_of_payment_dropdown["values"] = ["Gpay", "Cash"]
+        self.mode_of_payment_dropdown["values"] = getExpenseModeList()
         self.mode_of_payment_dropdown.place(relx = 0.45, rely = 0.7, relwidth = 0.2, anchor = "center")
+        self.mode_validation_variable = StringVar()
+        self.mode_validation_message = Label(self.Window, textvariable = self.mode_validation_variable, font = self.font_errors, background = self.bg_color)
+        self.mode_validation_message.place(relx = 0.75, rely = 0.7, anchor = "center")
         self.add_expense_button = Button(self.Window, text = "Add Expense", relief = RAISED, font = self.font_buttons, command = lambda:addExpense(self))
         self.add_expense_button.place(relx = 0.5, rely = 0.85, relwidth = 0.3, anchor = "center")
 
@@ -116,7 +128,7 @@ class App(threading.Thread):
         self.mode_of_payment_label.place(relx = 0.2, rely = 0.55, anchor = "center")
         self.mode_of_payment_variable = StringVar()
         self.mode_of_payment_dropdown = ttk.Combobox(self.Window, textvariable = self.mode_of_payment_variable, background = self.bg_color)
-        self.mode_of_payment_dropdown["values"] = ["Gpay", "Cash"]
+        self.mode_of_payment_dropdown["values"] = getExpenseModeList()
         self.mode_of_payment_dropdown.place(relx = 0.45, rely = 0.55, relwidth = 0.2, anchor = "center")
         self.add_funds_button = Button(self.Window, text = "Add Funds", relief = RAISED, font = self.font_buttons, command = lambda:addFunds(self))
         self.add_funds_button.place(relx = 0.5, rely = 0.7, relwidth = 0.3, anchor = "center")
@@ -142,7 +154,7 @@ class App(threading.Thread):
         self.income_type_label.place(relx = 0.2, rely = 0.4, anchor = "center")
         self.income_type_variable = StringVar()
         self.income_type_dropdown = ttk.Combobox(self.Window, textvariable = self.income_type_variable, background = self.bg_color)
-        self.income_type_dropdown["values"] = ["Food", "Cab"]
+        self.income_type_dropdown["values"] = ["Salary", "Pocket Money"]
         self.income_type_dropdown.place(relx = 0.45, rely = 0.4, relwidth = 0.2, anchor = "center")
         self.income_amount_label = Label(self.Window, text = "Amount : ", font = self.font_labels, background = self.bg_color)
         self.income_amount_label.place(relx = 0.2, rely = 0.55, anchor = "center")
