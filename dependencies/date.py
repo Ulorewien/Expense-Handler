@@ -1,5 +1,4 @@
 from datetime import date
-import pandas as pd
 
 def getDayList():
     day_list = list(range(1,32))

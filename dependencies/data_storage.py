@@ -1,7 +1,8 @@
 from openpyxl import *
+from dependencies.excel_functions import *
 
 def addExpenseData(data):
-    # print(data)
+    month = data["Month"] + data["Year"]
     try:
         workbook = load_workbook("./output/Expenditure.xlsx")
     except:
@@ -16,15 +17,3 @@ def addExpenseData(data):
     
 
     workbook.save("./output/Expenditure.xlsx")
-
-def createWorkbook(month):
-    workbook = Workbook()
-    workbook.create_sheet(month)
-    workbook["A1"] = "Date"
-    workbook["B1"] = "Expense"
-    workbook["C1"] = "Amount"
-    workbook["D1"] = "Method"
-    workbook["E1"] = "Total Expenditure"
-    workbook["F1"] = "Total Funds"
-    workbook["G1"] = "Income"
-    workbook["H1"] = "Amount"
