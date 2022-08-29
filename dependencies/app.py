@@ -25,7 +25,7 @@ class App(threading.Thread):
         self.font_inputs = self.specs["Application"]["font"] + " " + self.specs["Font_size"]["inputs"]
         self.font_errors = self.specs["Application"]["font"] + " " + self.specs["Font_size"]["errors"]
         self.Window = Tk()
-        self.Window.title("Expense Handler")
+        self.Window.title("Expense Handler - Ulorewien")
         self.Window.configure(bg = self.bg_color)
         self.Window.resizable(False, False)
         self.Window.geometry(self.specs["Application"]["width"] + "x" + self.specs["Application"]["height"])

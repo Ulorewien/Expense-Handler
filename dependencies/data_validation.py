@@ -52,6 +52,7 @@ def addExpense(app):
         "Type" : type_of_expense,
         "Amount" : amount_of_expense,
         "Mode" : mode_of_payment,
+        "Month" : month_of_expense,
     }
     addExpenseData(data)
 
