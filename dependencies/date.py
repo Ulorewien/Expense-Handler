@@ -18,8 +18,8 @@ def getYearList():
     return year_list
 
 def getMonthNumber(month):
-    month_list = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    short_month_list = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]
+    month_list = getMonthList()
+    short_month_list = getShortMonthList()
     try:
         return str(short_month_list.index(month) + 1)
     except:
@@ -38,8 +38,8 @@ def validateDate(day, month, year):
     except:
         return False
     
-    month_list = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    short_month_list = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]
+    month_list = getMonthList()
+    short_month_list = getShortMonthList()
     current_year = date.today().year
     current_month = date.today().month
     current_day = date.today().day
