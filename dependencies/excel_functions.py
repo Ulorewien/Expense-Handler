@@ -10,14 +10,16 @@ def createWorkbook(month):
     worksheet["B1"] = "Expense"
     worksheet["C1"] = "Amount"
     worksheet["D1"] = "Method"
-    worksheet["E1"] = "Total Expenditure"
-    worksheet["F1"] = "Total Funds"
-    worksheet["G1"] = "Income"
-    worksheet["H1"] = "Amount"
+    worksheet["E1"] = "Funds"
+    worksheet["F1"] = "Amount"
+    worksheet["G1"] = "Method"
+    worksheet["H1"] = "Income"
+    worksheet["I1"] = "Amount"
 
     for column in range(1, worksheet.max_column + 1):
         setColor(worksheet.cell(1, column), "headers")
         setColor(worksheet.cell(2, column), "headers")
+        setColor(worksheet.cell(3, column), "headers")
 
     return workbook
 
@@ -29,10 +31,11 @@ def createSheet(workbook, month):
     worksheet["B1"] = "Expense"
     worksheet["C1"] = "Amount"
     worksheet["D1"] = "Method"
-    worksheet["E1"] = "Total Expenditure"
-    worksheet["F1"] = "Total Funds"
-    worksheet["G1"] = "Income"
-    worksheet["H1"] = "Amount"
+    worksheet["E1"] = "Funds"
+    worksheet["F1"] = "Amount"
+    worksheet["G1"] = "Method"
+    worksheet["H1"] = "Income"
+    worksheet["I1"] = "Amount"
 
     for column in range(1, worksheet.max_column + 1):
         setColor(worksheet.cell(1, column), "headers")
@@ -47,7 +50,8 @@ def setRowColor(worksheet, row):
     setColor(worksheet.cell(row, 2), "expense")
     setColor(worksheet.cell(row, 3), "expense")
     setColor(worksheet.cell(row, 4), "expense")
-    setColor(worksheet.cell(row, 5), "expense")
+    setColor(worksheet.cell(row, 5), "funds")
     setColor(worksheet.cell(row, 6), "funds")
-    setColor(worksheet.cell(row, 7), "income")
+    setColor(worksheet.cell(row, 7), "funds")
     setColor(worksheet.cell(row, 8), "income")
+    setColor(worksheet.cell(row, 9), "income")

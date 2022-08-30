@@ -11,6 +11,7 @@ def addExpenseData(data):
     
     if(month in workbook.sheetnames):
         worksheet = workbook[month]
+        worksheet.delete_rows(worksheet.max_row)
     else:
         createSheet(workbook, month)
         worksheet = workbook[month]
@@ -20,6 +21,13 @@ def addExpenseData(data):
     worksheet["B" + str(new_row)] = data["Type"]
     worksheet["C" + str(new_row)] = data["Amount"]
     worksheet["D" + str(new_row)] = data["Mode"]
+    setRowColor(worksheet, new_row)
+
+    new_row = new_row + 1
+    worksheet["A" + str(new_row)] = "Total"
+    worksheet["C" + str(new_row)] = "=SUM(C3:C" + str(new_row - 1) + ")"
+    worksheet["F" + str(new_row)] = "=SUM(F3:F" + str(new_row - 1) + ")"
+    worksheet["I" + str(new_row)] = "=SUM(I3:I" + str(new_row - 1) + ")"
     setRowColor(worksheet, new_row)
 
     for column in worksheet.columns:
