@@ -48,11 +48,12 @@ def addExpense(app):
     app.mode_validation_variable.set("")
 
     data = {
-        "Date" : day_of_expense + month_of_expense + year_of_expense,
+        "Day" : day_of_expense,
+        "Month" : month_of_expense,
+        "Year" : year_of_expense,
         "Type" : type_of_expense,
         "Amount" : amount_of_expense,
         "Mode" : mode_of_payment,
-        "Month" : month_of_expense,
     }
     addExpenseData(data)
 

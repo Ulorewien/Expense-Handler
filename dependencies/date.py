@@ -17,6 +17,14 @@ def getYearList():
     year_list = list(range(current_year, current_year - 11, -1))
     return year_list
 
+def getMonthNumber(month):
+    month_list = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    short_month_list = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]
+    try:
+        return str(short_month_list.index(month) + 1)
+    except:
+        return str(month_list.index(month) + 1)
+
 def validateDate(day, month, year):
     day = day.replace(" ","")
     month = month.replace(" ","")
