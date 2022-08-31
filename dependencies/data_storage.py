@@ -1,6 +1,7 @@
 from openpyxl import *
 from dependencies.excel_functions import *
 from dependencies.date import *
+import pandas as pd
 
 def addExpenseData(data):
     month = data["Month"] + data["Year"]
@@ -105,3 +106,10 @@ def addIncomeData(data):
             cell.alignment = cell.alignment.copy(horizontal='center', vertical='center')
     workbook._sheets.sort(key = lambda worksheet: worksheet.title[-4:])
     workbook.save("./output/Expenditure.xlsx")
+
+def addExpenseTypeOrModeData(data):
+    try:
+        old_data = pd.read_csv("./dependencies/data.csv")
+    except:
+        old_data = pd.DataFrame()
+        print(data)

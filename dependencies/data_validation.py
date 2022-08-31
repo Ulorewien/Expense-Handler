@@ -148,3 +148,25 @@ def addIncome(app):
         "Amount" : amount_of_income,
     }
     addIncomeData(data)
+
+def addExpenseTypeOrMode(app):
+    expense_type = app.expense_type_entry.get()
+    expense_mode = app.expense_mode_entry.get()
+
+    if(not (expense_type.replace(" ","") or expense_mode.replace(" ",""))):
+        app.entry_validation_variable.set("Enter at least one input")
+        app.entry_validation_message.config(foreground = app.specs["Color"]["error"])
+        return
+    app.entry_validation_variable.set("")
+
+    expense_type = expense_type.lstrip()
+    expense_type = expense_type.rstrip()
+    expense_mode = expense_mode.lstrip()
+    expense_mode = expense_mode.rstrip()
+
+    data = {
+        "Type" : expense_type,
+        "Mode" : expense_mode,
+    }
+
+    addExpenseTypeOrModeData(data)

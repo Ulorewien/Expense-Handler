@@ -41,6 +41,7 @@ class App(threading.Thread):
         self.options.add_command(label = "Expense", command = lambda:self.destroyPage(self.specs["Pages"]["expense_page"]))
         self.options.add_command(label = "Funds", command = lambda:self.destroyPage(self.specs["Pages"]["funds_page"]))
         self.options.add_command(label = "Income", command = lambda:self.destroyPage(self.specs["Pages"]["income_page"]))
+        self.options.add_command(label = "Expense Type/Mode", command = lambda:self.destroyPage(self.specs["Pages"]["expense_type_mode_page"]))
         self.options.add_separator()
         self.options.add_command(label = "Exit", command = self.Window.destroy)
         self.Window.config(menu = self.menubar)
@@ -187,6 +188,23 @@ class App(threading.Thread):
         self.add_income_button = Button(self.Window, text = "Add Income", relief = RAISED, font = self.font_buttons, command = lambda:addIncome(self))
         self.add_income_button.place(relx = 0.5, rely = 0.7, relwidth = 0.3, anchor = "center")
 
+    def addExpenseTypeOrMode(self):
+        self.expense_header_label = Label(self.Window, text = "Expense Type or Method Of Payment", font = self.font_headers, background = self.bg_color)
+        self.expense_header_label.place(relx = 0.5, rely = 0.1, anchor = "center")
+        self.expense_type_label = Label(self.Window, text = "Type : ", font = self.font_labels, background = self.bg_color)
+        self.expense_type_label.place(relx = 0.2, rely = 0.25, anchor = "center")
+        self.expense_type_entry = Entry(self.Window, font = self.font_inputs, background = self.bg_color)
+        self.expense_type_entry.place(relx = 0.45, rely = 0.25, relwidth = 0.2, anchor = "center")
+        self.expense_mode_label = Label(self.Window, text = "Mode : ", font = self.font_labels, background = self.bg_color)
+        self.expense_mode_label.place(relx = 0.2, rely = 0.4, anchor = "center")
+        self.expense_mode_entry = Entry(self.Window, font = self.font_inputs, background = self.bg_color)
+        self.expense_mode_entry.place(relx = 0.45, rely = 0.4, relwidth = 0.2, anchor = "center")
+        self.entry_validation_variable = StringVar()
+        self.entry_validation_message = Label(self.Window, textvariable = self.entry_validation_variable, font = self.font_errors, background = self.bg_color)
+        self.entry_validation_message.place(relx = 0.5, rely = 0.5, anchor = "center")
+        self.add_income_button = Button(self.Window, text = "Add", relief = RAISED, font = self.font_buttons, command = lambda:addExpenseTypeOrMode(self))
+        self.add_income_button.place(relx = 0.5, rely = 0.55, relwidth = 0.3, anchor = "center")
+
     def destroyPage(self, next_page_number):
         global page_number
         for widget in self.Window.winfo_children():
@@ -200,3 +218,5 @@ class App(threading.Thread):
             self.addFundsPage()
         elif(next_page_number == self.specs["Pages"]["income_page"]):
             self.addIncomePage()
+        elif(next_page_number == self.specs["Pages"]["expense_type_mode_page"]):
+            self.addExpenseTypeOrMode()
