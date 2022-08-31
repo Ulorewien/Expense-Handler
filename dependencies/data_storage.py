@@ -28,6 +28,7 @@ def addExpenseData(data):
     worksheet["C" + str(new_row)] = "=SUM(C3:C" + str(new_row - 1) + ")"
     worksheet["F" + str(new_row)] = "=SUM(F3:F" + str(new_row - 1) + ")"
     worksheet["I" + str(new_row)] = "=SUM(I3:I" + str(new_row - 1) + ")"
+    worksheet["J" + str(new_row)] = "=I" + str(new_row) + "-F" + str(new_row) + "-C" + str(new_row)
     setRowColor(worksheet, new_row)
 
     for column in worksheet.columns:
@@ -62,6 +63,7 @@ def addFundsData(data):
     worksheet["C" + str(new_row)] = "=SUM(C3:C" + str(new_row - 1) + ")"
     worksheet["F" + str(new_row)] = "=SUM(F3:F" + str(new_row - 1) + ")"
     worksheet["I" + str(new_row)] = "=SUM(I3:I" + str(new_row - 1) + ")"
+    worksheet["J" + str(new_row)] = "=I" + str(new_row) + "-F" + str(new_row) + "-C" + str(new_row)
     setRowColor(worksheet, new_row)
 
     for column in worksheet.columns:
@@ -95,6 +97,7 @@ def addIncomeData(data):
     worksheet["C" + str(new_row)] = "=SUM(C3:C" + str(new_row - 1) + ")"
     worksheet["F" + str(new_row)] = "=SUM(F3:F" + str(new_row - 1) + ")"
     worksheet["I" + str(new_row)] = "=SUM(I3:I" + str(new_row - 1) + ")"
+    worksheet["J" + str(new_row)] = "=I" + str(new_row) + "-F" + str(new_row) + "-C" + str(new_row)
     setRowColor(worksheet, new_row)
 
     for column in worksheet.columns:

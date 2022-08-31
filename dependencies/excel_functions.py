@@ -15,6 +15,7 @@ def createWorkbook(month):
     worksheet["G1"] = "Method"
     worksheet["H1"] = "Income"
     worksheet["I1"] = "Amount"
+    worksheet["J1"] = "Savings"
 
     for column in range(1, worksheet.max_column + 1):
         setColor(worksheet.cell(1, column), "headers")
@@ -36,6 +37,7 @@ def createSheet(workbook, month):
     worksheet["G1"] = "Method"
     worksheet["H1"] = "Income"
     worksheet["I1"] = "Amount"
+    worksheet["J1"] = "Savings"
 
     for column in range(1, worksheet.max_column + 1):
         setColor(worksheet.cell(1, column), "headers")
@@ -55,3 +57,4 @@ def setRowColor(worksheet, row):
     setColor(worksheet.cell(row, 7), "funds")
     setColor(worksheet.cell(row, 8), "income")
     setColor(worksheet.cell(row, 9), "income")
+    setColor(worksheet.cell(row, 10), "savings")
