@@ -3,3 +3,9 @@ def getExpenseTypeList():
 
 def getExpenseModeList():
     return ["Gpay", "Cash"]
+
+def getFundsModeList():
+    return ["Gpay", "Card"]
+
+def getIncomeTypeList():
+    return ["Salary", "Pocket Money"]

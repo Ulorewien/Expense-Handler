@@ -25,6 +25,13 @@ def getMonthNumber(month):
     except:
         return str(month_list.index(month) + 1)
 
+def getToday(app):
+    today = str(date.today())
+    month = getShortMonthList()
+    app.select_day_variable.set(today[8:])
+    app.select_month_variable.set(month[int(today[5:7]) - 1])
+    app.select_year_variable.set(today[:4])
+
 def validateDate(day, month, year):
     day = day.replace(" ","")
     month = month.replace(" ","")
